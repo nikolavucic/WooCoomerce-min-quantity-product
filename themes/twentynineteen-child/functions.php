@@ -3,20 +3,30 @@
 
 add_action( 'wp_enqueue_scripts', 'enqueue_wp_child_theme' );
 
-function enqueue_wp_child_theme() 
-{
-	wp_enqueue_style('parent-css', get_template_directory_uri().'/style.css' );
-
-	wp_enqueue_style('child-css', get_stylesheet_uri());
-
-	wp_enqueue_script('child-js', get_stylesheet_directory_uri() . '/js/script.js', array( 'jquery' ), '1.0', true );
+function enqueue_wp_child_theme() {
+	wp_enqueue_style( 'parent-css', get_template_directory_uri().'/style.css' );
+	wp_enqueue_style( 'child-css', get_stylesheet_uri() );
+	wp_enqueue_script( 'child-js', get_stylesheet_directory_uri() . '/js/script.js', array( 'jquery' ), '1.0', true );
 }
 
-// Adding funcionality to set Minimum Quantity requred to by "Group ticket" & change text "add tp cart"
+/*******************************************************************************/
+/***  Adding funcionality to set Minimum Quantity of every product you want  ***/
+/*******************************************************************************/
+/* ENG: Tested to: WordPress v5.1.1 & WooCommerce v3.5.7
+ *      Theme: is Twentynineteen and it's child is downloaded from web too. ( so, js folder & screenshot.png are not important here )
+ *      TextDomain: is "twentynineteen-child-min-quantity". It could be "woocommerce", "woocommerce-min-quantity" or "twentynineteen-child" - any domain can be used
+ *      Prefix: All functions are prefixed with "wentynineteen_child" it's maybe frustrating because it's too long but - any prefix can be used
+ *              "wc" is standard WooCommerce prefix
+ * SRB: Testirano do: WordPress v5.1.1 & WooCommerce v3.5.7
+ *      Tema: je Twentynineteen i child-tema je takodje skinuta sa neta. ( tako da fascikla js i screenshot.png ovde nisu bitni )
+ *      TextDomain: je "twentynineteen-child-min-quantity". A moze biti "woocommerce", "woocommerce-min-quantity" or "twentynineteen-child" - bilo koji domen moze da se koristi
+ *      Prefix: Sve funkcije imaju prefiks "wentynineteen_child" mozda je to frustrirajuce jer je predugacko, ali - bilo koji prefix moze da se koristi
+ *              "wc" je standardni WooCommerce prefiks
+ */
 
 if( ! function_exists( 'twentynineteen_child_wc_add_min_qty_product_field' ) ){
     
-    // Adding field on product admin page in "inventory section"
+    // Adding field on product admin page
     function twentynineteen_child_wc_add_min_qty_product_field() {
         echo '<div class="options_group">';
         woocommerce_wp_text_input( 
@@ -31,6 +41,21 @@ if( ! function_exists( 'twentynineteen_child_wc_add_min_qty_product_field' ) ){
         echo '</div>';
     }
     
+    /* ENG: With this action, function is hooked to display input field in "inventory" product section,
+     *      but, with different hooks, it can be displayed in any product section:
+     *      - "woocommerce_product_options_general_product_data" - general section,
+     *      - "woocommerce_product_options_inventory_product_data" - inventory section,
+     *      - "woocommerce_product_options_shipping" - shipping section,
+     *      - "woocommerce_product_options_advanced" - advanced section,
+     *      - ect ...
+     * SRB: Ovom akcijom kacimo funkciju da doda polje za upisivanje kolicine proizvoda u "inventory" sekciju
+     *      ali, sa drugim hook-ovima, ona moze da bude zakacena i u drugim sekcijama:
+     *      - "woocommerce_product_options_general_product_data" - general sekcija,
+     *      - "woocommerce_product_options_inventory_product_data" - inventory sekcija,
+     *      - "woocommerce_product_options_shipping" - shipping sekcija,
+     *      - "woocommerce_product_options_advanced" - advanced sekcija,
+     *      - itd ... 
+     */
     add_action( 'woocommerce_product_options_inventory_product_data', 'twentynineteen_child_wc_add_min_qty_product_field' );
 }
 
