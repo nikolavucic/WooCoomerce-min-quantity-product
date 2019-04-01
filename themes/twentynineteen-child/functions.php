@@ -12,12 +12,12 @@ function enqueue_wp_child_theme() {
 /*******************************************************************************/
 /***  Adding funcionality to set Minimum Quantity of every product you want  ***/
 /*******************************************************************************/
-/* ENG: Tested to: WordPress v5.1.1 & WooCommerce v3.5.7
+/* ENG: Tested to: WordPress v5.1.1 & WooCommerce v3.5.7 & php7.2
  *      Theme: is Twentynineteen and it's child is downloaded from web too. ( so, js folder & screenshot.png are not important here )
  *      TextDomain: is "twentynineteen-child-min-quantity". It could be "woocommerce", "woocommerce-min-quantity" or "twentynineteen-child" - any domain can be used
  *      Prefix: All functions are prefixed with "wentynineteen_child" it's maybe frustrating because it's too long but - any prefix can be used
  *              "wc" is standard WooCommerce prefix
- * SRB: Testirano do: WordPress v5.1.1 & WooCommerce v3.5.7
+ * SRB: Testirano do: WordPress v5.1.1 i WooCommerce v3.5.7 i php7.2
  *      Tema: je Twentynineteen i child-tema je takodje skinuta sa neta. ( tako da fascikla js i screenshot.png ovde nisu bitni )
  *      TextDomain: je "twentynineteen-child-min-quantity". A moze biti "woocommerce", "woocommerce-min-quantity" or "twentynineteen-child" - bilo koji domen moze da se koristi
  *      Prefix: Sve funkcije imaju prefiks "wentynineteen_child" mozda je to frustrirajuce jer je predugacko, ali - bilo koji prefix moze da se koristi
@@ -48,12 +48,12 @@ if( ! function_exists( 'twentynineteen_child_wc_add_min_qty_product_field' ) ){
      *      - "woocommerce_product_options_shipping" - shipping section,
      *      - "woocommerce_product_options_advanced" - advanced section,
      *      - ect ...
-     * SRB: Ovom akcijom kacimo funkciju da doda polje za upisivanje kolicine proizvoda u "inventory" sekciju
+     * SRB: Ova akcija kaci funkciju da doda polje za upisivanje kolicine proizvoda u "inventory" sekciju
      *      ali, sa drugim hook-ovima, ona moze da bude zakacena i u drugim sekcijama:
-     *      - "woocommerce_product_options_general_product_data" - general sekcija,
-     *      - "woocommerce_product_options_inventory_product_data" - inventory sekcija,
-     *      - "woocommerce_product_options_shipping" - shipping sekcija,
-     *      - "woocommerce_product_options_advanced" - advanced sekcija,
+     *      - "woocommerce_product_options_general_product_data" - "general" sekcija,
+     *      - "woocommerce_product_options_inventory_product_data" - "inventory" sekcija,
+     *      - "woocommerce_product_options_shipping" - "shipping" sekcija,
+     *      - "woocommerce_product_options_advanced" - "advanced" sekcija,
      *      - itd ... 
      */
     add_action( 'woocommerce_product_options_inventory_product_data', 'twentynineteen_child_wc_add_min_qty_product_field' );
@@ -62,7 +62,13 @@ if( ! function_exists( 'twentynineteen_child_wc_add_min_qty_product_field' ) ){
 
 if( ! function_exists( 'twentynineteen_child_wc_qty_save_product_field' ) ){
     
-    // Saving the value set to Minimum Quantity options into _wc_min_qty_product meta key respectively
+    /* ENG: Saving the value set to Minimum Quantity options into _wc_min_qty_product meta key.
+     *      Meta key is with an "_" (underscore) because it will not be shown in custom fields list on the post edit screen,
+     *      or when using the the_meta() template function.
+     * SRB: Ova funkcija cuva vrednosti podesene u polju za upisivanje kolicine proizvoda i to u "_wc_min_qty_product" meta kljuc.
+     *      Meta kljuc je sa "_" (donjom crtom) i nece biti prikazan u listi prilagodjenih polja na stranici proizvoda u kontrolnoj tabli,
+     *      ili kada se koristi "the_meta() template" funkcija.
+     */
     function twentynineteen_child_wc_qty_save_product_field( $post_id ) {
         $val_min = trim( get_post_meta( $post_id, '_wc_min_qty_product', true ) );
         $new_min = sanitize_text_field( $_POST['_wc_min_qty_product'] );
@@ -75,8 +81,6 @@ if( ! function_exists( 'twentynineteen_child_wc_qty_save_product_field' ) ){
     add_action( 'woocommerce_process_product_meta', 'twentynineteen_child_wc_qty_save_product_field' );
 }
 
-
-    
 
 if( ! function_exists( 'twentynineteen_child_wc_qty_input_args' ) ){
     
@@ -102,8 +106,6 @@ if( ! function_exists( 'twentynineteen_child_wc_qty_input_args' ) ){
     
     add_filter( 'woocommerce_quantity_input_args', 'twentynineteen_child_wc_qty_input_args', 10, 2 );
 }
-
-
 
 
 if( ! function_exists( 'twentynineteen_child_wc_qty_add_to_cart_validation' ) ){
