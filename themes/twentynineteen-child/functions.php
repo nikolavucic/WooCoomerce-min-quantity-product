@@ -158,7 +158,11 @@ if( ! function_exists( 'twentynineteen_child_wc_qty_update_cart_validation' ) ){
 }
 
 
-//helper funkcije
+/* ENG: Helper functions
+ *      This two functions, are not directly hooked, but they are used few time in previous functions
+ * SRB: Pomocne funkcije
+ *      Ove dve funkcije nisu direktno zakacene, ali ih predhodne funkcije koriste nekoliko puta.
+ */
 
 if( ! function_exists( 'twentynineteen_child_wc_min_limit' ) ){
     
