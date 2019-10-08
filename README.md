@@ -19,7 +19,7 @@ Theme used: Twentynineteen and it's child is downloaded from web too.
 
 TextDomain used: "twentynineteen-child-min-quantity"
 
-Function prefix used: "wentynineteen_child" ( "wc" is standard WooCommerce prefix )
+Function prefix used: "twentynineteen_child" ( "wc" is standard WooCommerce prefix )
 
 ### Installing
 
